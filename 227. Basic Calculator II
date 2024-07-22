@@ -1,0 +1,65 @@
+class Solution {
+public:
+    int getPresidence(char op) {
+        if (op == '+' || op == '-')
+            return 0;
+        return 1;
+    }
+
+    int solve(int one, int two, char op) {
+        if (op == '+')
+            return one + two;
+        else if (op == '-') {
+            return one - two;
+        } else if (op == '*') {
+            return one * two;
+        }
+        return one / two;
+    }
+
+    int calculate(string s) {
+        stack<int> st;
+        stack<char> op;
+        int i = 0;
+        int n = s.size();
+
+        while (i < n) {
+            if(isspace(s[i])){
+                i++;
+                continue;
+            }
+            if(isdigit(s[i])){
+                int num = 0;
+                while (i < n && s[i] >= 48 && s[i] <= 57) {
+                    num *= 10;
+                    num += (s[i] - '0');
+                    i++;
+                }
+                st.push(num);
+            }else{
+                while (!op.empty() &&
+                       getPresidence(op.top()) >= getPresidence(s[i])) {
+                    int two = st.top();
+                    st.pop();
+                    int one = st.top();
+                    st.pop();
+                    char temp = op.top();
+                    op.pop();
+                    st.push(solve(one, two, temp));
+                }
+                op.push(s[i]);
+                i++;
+            }
+        }
+        while (!op.empty()) {
+            int two = st.top();
+            st.pop();
+            int one = st.top();
+            st.pop();
+            char temp = op.top();
+            op.pop();
+            st.push(solve(one, two, temp));
+        }
+        return st.top();
+    }
+};
