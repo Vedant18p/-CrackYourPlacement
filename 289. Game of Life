@@ -1,0 +1,48 @@
+
+class Solution {
+public:
+    void gameOfLife(vector<vector<int>>& b) {
+        int n = b.size() - 1;
+        int m = b[0].size() - 1;
+        int count = 0;
+
+        for (int i = 0; i <= n; i++) {
+            for (int j = 0; j <= m; j++) {
+                count = 0;
+                int crr = b[i][j];
+
+                if (i > 0) {
+                    if (j > 0 && abs(b[i - 1][j - 1]) == 1)
+                        count++;
+                    if (abs(b[i - 1][j]) == 1)
+                        count++;
+                    if (j < m && abs(b[i - 1][j + 1]) == 1)
+                        count++;
+                }
+                if (j > 0 && abs(b[i][j - 1]) == 1)
+                    count++;
+                if (j < m && abs(b[i][j + 1]) == 1)
+                    count++;
+                if (i < n) {
+                    if (j > 0 && abs(b[i + 1][j - 1]) == 1)
+                        count++;
+                    if (abs(b[i + 1][j]) == 1)
+                        count++;
+                    if (j < m && abs(b[i + 1][j + 1]) == 1)
+                        count++;
+                }
+                if(crr == 0 && count == 3)b[i][j] = -2;
+                else if(crr == 1){
+                    if(count > 3 || count < 2)b[i][j] = -1;
+                }
+            }
+        }
+        
+        for(int i = 0;i<=n;i++){
+            for(int j = 0;j<=m;j++){
+                if(b[i][j] == -1)b[i][j] = 0;
+                else if(b[i][j] == -2)b[i][j] = 1;
+            }
+        }
+    }
+};
