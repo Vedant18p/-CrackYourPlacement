@@ -1,0 +1,12 @@
+class Solution {
+public:
+    int findDuplicate(vector<int>& nums) {
+        int i = 0;
+        while(i<nums.size()){
+            int crrIdx = nums[i];
+            if(nums[i] == nums[crrIdx])return nums[i];
+            else swap(nums[i],nums[crrIdx]);
+        }
+        return -1;
+    }
+};
