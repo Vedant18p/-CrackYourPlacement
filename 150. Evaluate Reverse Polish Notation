@@ -1,0 +1,32 @@
+class Solution {
+public:
+
+    int cal(int a,int b,string op){
+        switch (op[0]){
+            case '+' : return a + b;
+            case '-' : return a-b;
+            case '*' : return a*b;
+            case '/' : return a/b;
+        }
+        return 1;
+    }
+
+
+    int evalRPN(vector<string>& tokens) {
+        stack<int>num;
+        for(string i : tokens){
+            if(i != "*" && i != "+" && i != "-" && i != "/"){
+                num.push(stoi(i));
+            }else{
+                int b = num.top();
+                num.pop();
+                int a = num.top();
+                num.pop();
+                int res = cal(a,b,i);
+                num.push(res);
+            }
+        }
+        return num.top();
+        
+    }
+};
