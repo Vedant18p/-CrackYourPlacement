@@ -1,0 +1,25 @@
+class Solution {
+public:
+
+    void back(vector< vector<int> >& res,vector<int> &temp,int s,int n,int k){
+        if(temp.size() == k){
+            res.push_back(temp);
+            return;
+        }
+        for(int i = s;i<=n;i++){
+
+            if(temp.size() + (n-i+1) < k)break;
+
+            temp.push_back(i);
+            back(res,temp,i+1,n,k);
+            temp.pop_back();
+        }
+    }
+
+    vector<vector<int>> combine(int n, int k) {
+        vector< vector<int> > res;
+        vector<int> temp;
+        back(res,temp,1,n,k);
+        return res;
+    }
+};
