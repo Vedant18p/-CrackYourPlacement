@@ -12,12 +12,21 @@
 class Solution {
 public:
 
-    int test(TreeNode* root){
-        if(root == NULL)return 0;
-        return 1 + max(test(root->left),test(root->right));
+
+    int find(TreeNode* root,int& score){
+        if(root == NULL){
+            return 0;
+        }
+        int lr = find(root->left,score);
+        int rr = find(root->right,score);
+
+        score = max(score,lr+rr);
+        return max(lr,rr) + 1;
     }
 
     int diameterOfBinaryTree(TreeNode* root) {
-        return test(root->left) + test(root->right);
+        int score = 0;
+        find(root,score);
+        return score;
     }
 };
