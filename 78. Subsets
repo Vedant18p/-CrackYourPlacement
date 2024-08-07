@@ -1,0 +1,22 @@
+class Solution {
+public:
+
+    void addSubset(vector<int>& nums,int n,int idx,vector<int> temp,vector<vector<int>>& res){
+        if(idx == n){
+            res.push_back(temp);
+            return;
+        }
+        addSubset(nums,n,idx+1,temp,res);
+        temp.push_back(nums[idx]);
+        addSubset(nums,n,idx+1,temp,res);
+        temp.pop_back();
+    }
+
+    vector<vector<int>> subsets(vector<int>& nums) {
+        vector<vector<int>> res;
+        int n = nums.size();
+        vector<int> temp;
+        addSubset(nums,n,0,temp,res);
+        return res;
+    }
+};
