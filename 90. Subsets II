@@ -1,0 +1,23 @@
+class Solution {
+public:
+
+    void dump(vector<vector<int>>& res,vector<int>& temp,int idx,vector<int>& nums){
+        res.push_back(temp);
+
+        for(int i = idx;i<nums.size();i++){
+            
+            if(i>idx && nums[i] == nums[i-1])continue;
+            temp.push_back(nums[i]);
+            dump(res,temp,i+1,nums);
+            temp.pop_back();
+        }
+    }
+
+    vector<vector<int>> subsetsWithDup(vector<int>& nums) {
+        vector<vector<int>> res;
+        vector<int> temp;
+        sort(nums.begin(),nums.end());
+        dump(res,temp,0,nums);
+        return res;
+    }
+};
